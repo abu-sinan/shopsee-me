@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --nav-height:   3.5rem;
+    --banner-height:2.25rem;
+    --header-total: calc(var(--nav-height) + var(--banner-height));
+  }
+
+  * {
+    box-sizing:    border-box;
+    border-color:  theme("colors.brand.gray.200");
+  }
+
+  html {
+    scroll-behavior:          smooth;
+    -webkit-font-smoothing:   antialiased;
+    -moz-osx-font-smoothing:  grayscale;
+    text-rendering:           optimizeLegibility;
+    font-feature-settings:    "liga" 1, "kern" 1;
+  }
+
+  body {
+    @apply bg-brand-white text-brand-black font-sans;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  /* Selection */
+  ::selection {
+    background: theme("colors.brand.black");
+    color:      theme("colors.brand.white");
+  }
+
+  /* Focus */
+  :focus-visible {
+    @apply outline-none ring-1 ring-brand-black ring-offset-2 ring-offset-brand-white;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar        { width: 3px; height: 3px; }
+  ::-webkit-scrollbar-track  { background: transparent; }
+  ::-webkit-scrollbar-thumb  {
+    background:    theme("colors.brand.stone");
+    border-radius: 100px;
+  }
+
+  /* Headings default to display font */
+  h1, h2, h3, h4 {
+    @apply font-display;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ─── Typography ────────────────────────────────────────── */
+@layer components {
+  /* Display */
+  .text-display-2xl {
+    @apply font-display font-light text-[clamp(3.5rem,8vw,9rem)] leading-none tracking-tight;
+  }
+  .text-display-xl {
+    @apply font-display font-light text-[clamp(2.75rem,6vw,7rem)] leading-none tracking-tight;
+  }
+  .text-display-lg {
+    @apply font-display font-light text-[clamp(2rem,4vw,5rem)] leading-[1.05] tracking-tight;
+  }
+  .text-display-md {
+    @apply font-display font-normal text-[clamp(1.5rem,3vw,3.5rem)] leading-[1.1] tracking-tight;
+  }
+  .text-display-sm {
+    @apply font-display font-normal text-[clamp(1.25rem,2.5vw,2.5rem)] leading-[1.15] tracking-tight;
+  }
+
+  /* Body */
+  .text-body-lg {
+    @apply font-sans text-base md:text-lg leading-relaxed text-brand-muted;
+  }
+  .text-body-md {
+    @apply font-sans text-sm md:text-[0.9375rem] leading-relaxed text-brand-muted;
+  }
+  .text-body-sm {
+    @apply font-sans text-xs md:text-sm leading-relaxed text-brand-ash;
+  }
+
+  /* Labels */
+  .label-xs {
+    @apply font-sans text-[0.625rem] font-semibold tracking-widest-4 uppercase text-brand-ash;
+  }
+  .label-sm {
+    @apply font-sans text-[0.6875rem] font-medium tracking-widest-3 uppercase text-brand-ash;
+  }
+  .label-md {
+    @apply font-sans text-xs font-medium tracking-widest-2 uppercase text-brand-ash;
+  }
+
+  /* Legacy aliases (used in existing components) */
+  .heading-xl  { @apply text-display-xl; }
+  .heading-lg  { @apply text-display-lg; }
+  .heading-md  { @apply text-display-md; }
+  .heading-sm  { @apply text-display-sm; }
+  .label-caps  { @apply label-sm; }
+  .body-lg     { @apply text-body-lg; }
+  .body-md     { @apply text-body-md; }
+
+  /* ─── Layout ─────────────────────────────────── */
+  .container-brand {
+    @apply w-full max-w-screen-2xl mx-auto px-5 sm:px-8 lg:px-12 xl:px-16;
+  }
+  .container-narrow {
+    @apply w-full max-w-4xl mx-auto px-5 sm:px-8;
+  }
+
+  /* ─── Buttons ────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2.5
+           bg-brand-black text-brand-white
+           h-12 px-8 text-[0.6875rem] font-semibold tracking-widest-3 uppercase
+           transition-all duration-300 ease-brand
+           hover:bg-brand-dark
+           active:scale-[0.98]
+           disabled:opacity-40 disabled:cursor-not-allowed
+           focus-visible:ring-2 focus-visible:ring-brand-black focus-visible:ring-offset-2;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2.5
+           border border-brand-black text-brand-black bg-transparent
+           h-12 px-8 text-[0.6875rem] font-semibold tracking-widest-3 uppercase
+           transition-all duration-300 ease-brand
+           hover:bg-brand-black hover:text-brand-white
+           active:scale-[0.98]
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           text-brand-muted bg-transparent
+           h-10 px-4 text-[0.6875rem] font-medium tracking-widest-2 uppercase
+           transition-colors duration-200
+           hover:text-brand-black;
+  }
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2.5
+           bg-brand-accent text-white
+           h-12 px-8 text-[0.6875rem] font-semibold tracking-widest-3 uppercase
+           transition-all duration-300 ease-brand
+           hover:bg-brand-gold
+           active:scale-[0.98]
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+  .btn-sm {
+    @apply h-9 px-5 text-[0.625rem] tracking-widest-2;
+  }
+
+  /* ─── Product Card ───────────────────────────── */
+  .product-img-wrap {
+    @apply overflow-hidden bg-brand-cream;
+  }
+  .product-img-wrap img {
+    @apply transition-transform duration-700 ease-brand will-change-transform;
+  }
+  .product-img-wrap:hover img {
+    @apply scale-[1.04];
+  }
+
+  /* ─── Links ──────────────────────────────────── */
+  .link-hover {
+    @apply relative after:absolute after:bottom-0 after:left-0
+           after:h-px after:w-0 after:bg-current
+           after:transition-all after:duration-300 after:ease-brand
+           hover:after:w-full;
+  }
+  .link-nav {
+    @apply text-[0.6875rem] font-medium tracking-widest-2 uppercase
+           text-brand-muted transition-colors duration-200
+           hover:text-brand-black;
+  }
+
+  /* ─── Inputs ─────────────────────────────────── */
+  .input-base {
+    @apply w-full bg-transparent border-b border-brand-gray-300
+           px-0 py-3 text-sm text-brand-black
+           placeholder:text-brand-stone
+           outline-none transition-colors duration-200
+           focus:border-brand-black;
+  }
+  .input-box {
+    @apply w-full bg-brand-white border border-brand-gray-200
+           px-4 py-3 text-sm text-brand-black
+           placeholder:text-brand-stone
+           outline-none transition-all duration-200
+           focus:border-brand-black focus:bg-white;
+  }
+
+  /* ─── Dividers ───────────────────────────────── */
+  .divider {
+    @apply border-t border-brand-gray-200;
+  }
+  .divider-dark {
+    @apply border-t border-brand-gray-800;
+  }
+
+  /* ─── Section spacing ────────────────────────── */
+  .section-sm  { @apply py-12 md:py-16; }
+  .section-md  { @apply py-16 md:py-24; }
+  .section-lg  { @apply py-20 md:py-32; }
+  .section-xl  { @apply py-24 md:py-40; }
+
+  /* ─── Cards ──────────────────────────────────── */
+  .card {
+    @apply bg-white border border-brand-gray-100
+           transition-shadow duration-300
+           hover:shadow-md;
+  }
+  .card-flat {
+    @apply bg-brand-cream/60 border border-brand-warm/50;
+  }
+}
+
+/* ─── Utilities ─────────────────────────────────────────── */
+@layer utilities {
+  .text-balance    { text-wrap: balance; }
+  .text-pretty     { text-wrap: pretty; }
+  .no-scrollbar    { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .writing-vertical { writing-mode: vertical-rl; }
+  .pt-header       { padding-top: var(--header-total); }
+  .mt-header       { margin-top:  var(--header-total); }
+
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(135deg, theme("colors.brand.black") 0%, theme("colors.brand.muted") 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@keyframes slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}

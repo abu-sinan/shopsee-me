@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import { ShopPageClient } from "@/features/shop/ShopPageClient";
 import { SITE_CONFIG } from "@/constants";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Shop All",
   description: `Browse the full ${SITE_CONFIG.name} collection.`,

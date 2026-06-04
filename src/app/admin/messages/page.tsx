@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Suspense }      from "react";
 import { AdminMessagesClient } from "@/features/admin/messages/AdminMessagesClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = { title: "Messages" };
 
 export default function AdminMessagesPage() {

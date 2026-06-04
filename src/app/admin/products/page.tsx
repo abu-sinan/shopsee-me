@@ -4,6 +4,8 @@ import { createClient }           from "@/lib/supabase/server";
 import { AdminProductsClient }    from "@/features/admin/products/AdminProductsClient";
 import type { Product }           from "@/types";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = { title: "Products" };
 
 async function getProducts(): Promise<Product[]> {

@@ -5,6 +5,8 @@ import { ProductDetailClient } from "@/features/product/ProductDetailClient";
 import { RelatedProducts } from "@/features/product/RelatedProducts";
 import type { Product } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 interface Props { params: Promise<{ slug: string }>; }
 
 async function getProduct(slug: string): Promise<Product | null> {

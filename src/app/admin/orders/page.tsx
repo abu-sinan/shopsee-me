@@ -3,6 +3,8 @@ import { Suspense }             from "react";
 import { createClient }         from "@/lib/supabase/server";
 import { AdminOrdersClient }    from "@/features/admin/orders/AdminOrdersClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = { title: "Orders" };
 
 async function getOrders() {

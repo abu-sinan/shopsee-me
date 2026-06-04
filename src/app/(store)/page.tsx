@@ -7,6 +7,8 @@ import { FeaturedProducts } from "@/features/home/FeaturedProducts";
 import { NewsletterSection } from "@/features/home/NewsletterSection";
 import { SITE_CONFIG } from "@/constants";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
   description: SITE_CONFIG.description,

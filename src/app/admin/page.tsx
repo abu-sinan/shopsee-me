@@ -4,6 +4,8 @@ import { DashboardStats }   from "@/features/admin/dashboard/DashboardStats";
 import { RecentOrders }     from "@/features/admin/dashboard/RecentOrders";
 import { RecentMessages }   from "@/features/admin/dashboard/RecentMessages";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = { title: "Dashboard" };
 
 async function getDashboardData() {

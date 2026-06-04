@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ShopPageClient } from "@/features/shop/ShopPageClient";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ category: string; subcategory: string }>;
 }

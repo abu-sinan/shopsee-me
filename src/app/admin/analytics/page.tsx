@@ -2,6 +2,8 @@ import type { Metadata }      from "next";
 import { createClient }       from "@/lib/supabase/server";
 import { AnalyticsDashboard } from "@/features/admin/analytics/AnalyticsDashboard";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = { title: "Analytics" };
 
 async function getAnalyticsData() {

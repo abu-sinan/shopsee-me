@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { createClient }  from "@/lib/supabase/server";
 import { AdminSettings } from "@/features/admin/settings/AdminSettings";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = { title: "Settings" };
 
 export default async function AdminSettingsPage() {

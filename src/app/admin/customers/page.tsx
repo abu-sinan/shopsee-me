@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { createClient }  from "@/lib/supabase/server";
 import { formatPrice }   from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = { title: "Customers" };
 
 interface CustomerRow {

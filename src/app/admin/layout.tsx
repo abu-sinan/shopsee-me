@@ -4,6 +4,8 @@ import { createClient }    from "@/lib/supabase/server";
 import { AdminSidebar }    from "@/features/admin/components/AdminSidebar";
 import { AdminHeader }     from "@/features/admin/components/AdminHeader";
 
+export const dynamic = "force-dynamic";
+
 async function getAdminUser() {
   try {
     const supabase = await createClient();

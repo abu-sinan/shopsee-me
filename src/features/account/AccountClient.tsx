@@ -42,7 +42,7 @@ export function AccountClient() {
     if (!user) return;
     const supabase = createClient();
     supabase.from("orders").select("*, order_items(*)").eq("user_id", user.id).order("created_at", { ascending: false })
-      .then(({ data }) => { setOrders((data ?? []) as typeof orders); setOL(false); });
+      .then(({ data }: { data: typeof orders | null }) => { setOrders((data ?? []) as typeof orders); setOL(false); });
   }, [user]);
 
   const handleSignOut = async () => { await signOut(); router.push("/"); router.refresh(); };

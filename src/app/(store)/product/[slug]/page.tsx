@@ -36,8 +36,8 @@ export default async function ProductPage({ params }: Props) {
   if (!product) notFound();
   return (
     <>
-      <ProductDetailClient product={product} />
-      <RelatedProducts categoryId={product.category_id} excludeId={product.id} />
+      <ProductDetailClient product={product!} />
+      <RelatedProducts categoryId={product!.category_id} excludeId={product!.id} />
     </>
   );
 }

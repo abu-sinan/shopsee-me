@@ -17,7 +17,7 @@ export const registerSchema = z
       .regex(/[0-9]/, "Must include at least one number"),
     confirm_password: z.string(),
   })
-  .refine((d) => d.password === d.confirm_password, {
+  .refine((d: { password: string; confirm_password: string }) => d.password === d.confirm_password, {
     message: "Passwords do not match",
     path: ["confirm_password"],
   });

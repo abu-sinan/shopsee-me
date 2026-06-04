@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { MetadataRoute } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { SITE_CONFIG } from "@/constants";

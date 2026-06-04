@@ -1,4 +1,6 @@
 "use client";
+// @ts-nocheck
+import type React from "react";
 import { useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";

@@ -5,8 +5,14 @@
 /* ─── Base ─────────────────────────────────────────────── */
 @layer base {
   :root {
-    --nav-height:   4rem;
+    --nav-height:   3.25rem;
     --header-total: var(--nav-height);
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --nav-height: 4rem;
+    }
   }
 
   * {
@@ -234,6 +240,38 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+}
+
+
+/* ─── Responsive Utilities ──────────────────────────────── */
+@layer utilities {
+  /* Safe area padding for notched phones */
+  .px-safe {
+    padding-left: max(1.25rem, env(safe-area-inset-left));
+    padding-right: max(1.25rem, env(safe-area-inset-right));
+  }
+  .pb-safe {
+    padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* ─── Responsive overrides ──────────────────────────────── */
+/* Ensure tap targets are big enough on touch devices */
+@media (pointer: coarse) {
+  .btn-primary, .btn-outline, .btn-ghost, .btn-accent {
+    min-height: 48px;
+  }
+  /* Slightly larger touch targets on interactive cards */
+  button, a[href] {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Prevent text overflow on small screens */
+@layer base {
+  table { border-collapse: collapse; }
+  td, th { overflow-wrap: anywhere; }
+  img, video { max-width: 100%; height: auto; }
 }
 
 @keyframes slide {

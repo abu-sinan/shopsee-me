@@ -195,7 +195,7 @@ export function ProductFormModal({
         exit={{ y: "100%", opacity: 0 }}
         transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full sm:max-w-2xl sm:rounded-none flex flex-col shadow-2xl"
+        className="bg-white w-full sm:max-w-2xl sm:rounded-none flex flex-col shadow-2xl max-h-[92dvh] sm:max-h-[90vh]"
         style={{ maxHeight: "92dvh" }}
       >
         {/* Header */}

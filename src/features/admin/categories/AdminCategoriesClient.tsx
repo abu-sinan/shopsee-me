@@ -101,7 +101,7 @@ export function AdminCategoriesClient({ initialCategories }: { initialCategories
       <AnimatePresence>
         {modalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setModalOpen(false)}>
-            <motion.div initial={{ scale: 0.94, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.94, opacity: 0 }} transition={{ duration: 0.25 }} onClick={(e) => e.stopPropagation()} className="bg-white w-full max-w-md shadow-2xl">
+            <motion.div initial={{ scale: 0.94, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.94, opacity: 0 }} transition={{ duration: 0.25 }} onClick={(e) => e.stopPropagation()} className="bg-white w-full max-w-md shadow-2xl max-h-[90dvh] overflow-y-auto">
               <div className="flex items-center justify-between px-6 py-5 border-b border-brand-gray-100">
                 <h2 className="font-display font-semibold text-lg">{isEdit ? "Edit Category" : "New Category"}</h2>
                 <button onClick={() => setModalOpen(false)} className="p-1 text-brand-gray-400 hover:text-brand-black"><X size={18} strokeWidth={1.5} /></button>

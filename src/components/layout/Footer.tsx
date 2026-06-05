@@ -1,100 +1,99 @@
-import Link         from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { InstagramIcon, FacebookIcon } from "@/components/icons/SocialIcons";
-import { SITE_CONFIG } from "@/constants";
-import { NewsletterForm } from "@/components/shared/NewsletterForm";
+import Link  from "next/link";
+import { ArrowUpRight, Mail, Phone, MapPin } from "lucide-react";
+import { InstagramIcon, FacebookIcon }       from "@/components/icons/SocialIcons";
+import { NewsletterForm }                    from "@/components/shared/NewsletterForm";
+import { SITE_CONFIG }                       from "@/constants";
 
-const footerLinks = {
-  Collections: [
-    { label: "Men",         href: "/men"         },
-    { label: "Women",       href: "/women"       },
-    { label: "Kids",        href: "/kids"        },
-    { label: "Accessories", href: "/accessories" },
-    { label: "New Arrivals",href: "/new"         },
-    { label: "Sale",        href: "/sale"        },
+const links = {
+  Shop: [
+    { label: "Men",          href: "/men"          },
+    { label: "Women",        href: "/women"        },
+    { label: "Kids",         href: "/kids"         },
+    { label: "Accessories",  href: "/accessories"  },
+    { label: "New Arrivals", href: "/new"          },
+    { label: "Sale",         href: "/sale"         },
   ],
-  Support: [
-    { label: "FAQ",             href: "/faq"      },
-    { label: "Order Tracking",  href: "/track"   },
-    { label: "Shipping Policy", href: "/shipping"},
-    { label: "Returns",         href: "/returns" },
-    { label: "Contact Us",      href: "/contact" },
+  Help: [
+    { label: "FAQ",            href: "/faq"      },
+    { label: "Track Order",    href: "/track"    },
+    { label: "Shipping Info",  href: "/shipping" },
+    { label: "Returns",        href: "/returns"  },
+    { label: "Contact Us",     href: "/contact"  },
   ],
   Company: [
-    { label: "About Us",         href: "/about"          },
-    { label: "Sustainability",   href: "/sustainability"  },
-    { label: "Privacy Policy",   href: "/privacy"        },
-    { label: "Terms of Service", href: "/terms"          },
+    { label: "About Us",       href: "/about"         },
+    { label: "Sustainability",  href: "/sustainability" },
+    { label: "Privacy Policy", href: "/privacy"       },
+    { label: "Terms",          href: "/terms"         },
   ],
 };
 
 export function Footer() {
-  const year = new Date().getFullYear();
   return (
-    <footer className="bg-brand-dark text-brand-white/80">
+    <footer className="bg-brand-dark text-white/70">
 
-      {/* Main grid */}
-      <div className="container-brand py-16 md:py-20 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-12 lg:gap-8">
+      {/* Main content */}
+      <div className="container-brand py-16 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.8fr_1fr_1fr_1fr] gap-10 lg:gap-8">
 
           {/* Brand column */}
-          <div className="space-y-7">
+          <div className="space-y-6">
             <div>
               <Link href="/" className="font-display font-light text-3xl text-white hover:opacity-70 transition-opacity block mb-3">
                 {SITE_CONFIG.name}
               </Link>
-              <p className="text-sm text-brand-white/50 leading-relaxed max-w-xs">
-                Premium fashion for everyday confidence. Minimal, elegant, and made for Bangladesh.
+              <p className="text-sm text-white/50 leading-relaxed max-w-xs">
+                Premium fashion for everyday confidence. Minimal, elegant, and crafted for Bangladesh.
               </p>
+            </div>
+
+            {/* Contact */}
+            <div className="space-y-2.5">
+              <a href={`mailto:${SITE_CONFIG.email}`}
+                className="flex items-center gap-2.5 text-sm text-white/50 hover:text-white transition-colors group">
+                <Mail size={14} strokeWidth={1.5} className="shrink-0" />
+                {SITE_CONFIG.email}
+              </a>
+              <div className="flex items-start gap-2.5 text-sm text-white/40">
+                <MapPin size={14} strokeWidth={1.5} className="shrink-0 mt-0.5" />
+                <span>{SITE_CONFIG.address}</span>
+              </div>
+            </div>
+
+            {/* Social */}
+            <div className="flex items-center gap-3">
+              <a href={SITE_CONFIG.social.instagram} target="_blank" rel="noopener noreferrer"
+                className="w-9 h-9 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all"
+                aria-label="Instagram">
+                <InstagramIcon size={14} />
+              </a>
+              <a href={SITE_CONFIG.social.facebook} target="_blank" rel="noopener noreferrer"
+                className="w-9 h-9 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all"
+                aria-label="Facebook">
+                <FacebookIcon size={14} />
+              </a>
             </div>
 
             {/* Newsletter */}
             <div>
-              <p className="label-xs text-brand-white/40 mb-3">Stay in the loop</p>
+              <p className="text-[10px] font-medium tracking-widest-3 uppercase text-white/30 mb-3">
+                Newsletter
+              </p>
               <NewsletterForm variant="dark" />
-            </div>
-
-            {/* Social */}
-            <div className="flex items-center gap-4">
-              <a
-                href={SITE_CONFIG.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 border border-brand-white/10 flex items-center justify-center text-brand-white/50 hover:text-white hover:border-brand-white/30 transition-all"
-                aria-label="Instagram"
-              >
-                <InstagramIcon size={14} />
-              </a>
-              <a
-                href={SITE_CONFIG.social.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 border border-brand-white/10 flex items-center justify-center text-brand-white/50 hover:text-white hover:border-brand-white/30 transition-all"
-                aria-label="Facebook"
-              >
-                <FacebookIcon size={14} />
-              </a>
-              <a
-                href={`mailto:${SITE_CONFIG.email}`}
-                className="flex items-center gap-1.5 text-xs text-brand-white/40 hover:text-white transition-colors ml-2"
-              >
-                {SITE_CONFIG.email}
-                <ArrowUpRight size={11} strokeWidth={1.5} />
-              </a>
             </div>
           </div>
 
           {/* Nav columns */}
-          {Object.entries(footerLinks).map(([heading, links]) => (
+          {Object.entries(links).map(([heading, items]) => (
             <div key={heading}>
-              <p className="label-xs text-brand-white/30 mb-6">{heading}</p>
-              <ul className="space-y-3.5">
-                {links.map((link) => (
+              <p className="text-[10px] font-semibold tracking-widest-3 uppercase text-white/25 mb-5">
+                {heading}
+              </p>
+              <ul className="space-y-3">
+                {items.map((link) => (
                   <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-brand-white/50 hover:text-white transition-colors link-hover"
-                    >
+                    <Link href={link.href}
+                      className="text-sm text-white/50 hover:text-white transition-colors">
                       {link.label}
                     </Link>
                   </li>
@@ -106,20 +105,13 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-brand-white/5">
-        <div className="container-brand py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-brand-white/25">
-            © {year} {SITE_CONFIG.name}. All rights reserved.
+      <div className="border-t border-white/5">
+        <div className="container-brand py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-white/20">
+            © {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.
           </p>
-          <div className="flex items-center gap-3">
-            {["COD", "bKash", "Nagad"].map((m) => (
-              <span key={m} className="text-[10px] font-medium px-2.5 py-1 border border-brand-white/10 text-brand-white/25 rounded-sm tracking-wider">
-                {m}
-              </span>
-            ))}
-          </div>
-          <p className="text-xs text-brand-white/20">
-            {SITE_CONFIG.phone}
+          <p className="text-xs text-white/20">
+            Designed &amp; built with care in Bangladesh
           </p>
         </div>
       </div>

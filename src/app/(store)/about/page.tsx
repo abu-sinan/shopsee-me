@@ -22,13 +22,12 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative h-[60vh] min-h-[400px] flex items-end overflow-hidden bg-brand-gray-900">
         <Image
-          src="/images/about/about-hero.svg"
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80"
           alt="ShopSeeMe studio"
           fill
           priority
           className="object-cover opacity-60"
           sizes="100vw"
-          unoptimized
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
         <div className="relative z-10 container-brand pb-16">
@@ -77,7 +76,7 @@ export default function AboutPage() {
       <section className="grid grid-cols-1 md:grid-cols-2 min-h-[500px]">
         <div className="relative min-h-[300px]">
           <Image
-            src="/images/about/about-craft.svg"
+            src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80"
             alt="Craftsmanship"
             fill
             className="object-cover"

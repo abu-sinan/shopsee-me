@@ -5,13 +5,14 @@
 /* ─── Base ─────────────────────────────────────────────── */
 @layer base {
   :root {
-    --nav-height:   3.25rem;
-    --header-total: var(--nav-height);
+    --nav-height:        3.5rem;   /* 56px mobile */
+    --nav-height-md:     4rem;     /* 64px desktop */
+    --header-total:      var(--nav-height);
   }
-
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     :root {
-      --nav-height: 4rem;
+      --nav-height:    4rem;
+      --header-total:  4rem;
     }
   }
 
@@ -111,8 +112,10 @@
   .body-md     { @apply text-body-md; }
 
   /* ─── Layout ─────────────────────────────────── */
+  /* Responsive container — fits all screen sizes */
   .container-brand {
-    @apply w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-14 xl:px-20 2xl:px-24;
+    @apply w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20;
+    max-width: 1440px;
   }
   .container-narrow {
     @apply w-full max-w-4xl mx-auto px-5 sm:px-8;
@@ -240,38 +243,6 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-}
-
-
-/* ─── Responsive Utilities ──────────────────────────────── */
-@layer utilities {
-  /* Safe area padding for notched phones */
-  .px-safe {
-    padding-left: max(1.25rem, env(safe-area-inset-left));
-    padding-right: max(1.25rem, env(safe-area-inset-right));
-  }
-  .pb-safe {
-    padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
-  }
-}
-
-/* ─── Responsive overrides ──────────────────────────────── */
-/* Ensure tap targets are big enough on touch devices */
-@media (pointer: coarse) {
-  .btn-primary, .btn-outline, .btn-ghost, .btn-accent {
-    min-height: 48px;
-  }
-  /* Slightly larger touch targets on interactive cards */
-  button, a[href] {
-    -webkit-tap-highlight-color: transparent;
-  }
-}
-
-/* Prevent text overflow on small screens */
-@layer base {
-  table { border-collapse: collapse; }
-  td, th { overflow-wrap: anywhere; }
-  img, video { max-width: 100%; height: auto; }
 }
 
 @keyframes slide {

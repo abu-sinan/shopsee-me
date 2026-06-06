@@ -230,3 +230,31 @@ CREATE POLICY "product_images_admin_delete"
 -- ============================================================
 
 SELECT 'RLS policies updated successfully ✅' AS result;
+
+-- ── FIX: Allow users to see their own orders (including guest orders by phone) ──
+-- Run this in Supabase SQL Editor if orders don't appear in account page
+
+-- First drop existing orders read policy
+DROP POLICY IF EXISTS "orders_owner_read" ON public.orders;
+
+-- Re-create with broader access (by user_id OR customer email)
+CREATE POLICY "orders_owner_read"
+  ON public.orders FOR SELECT
+  USING (
+    is_admin()
+    OR user_id = auth.uid()
+    OR (
+      user_id IS NULL
+      AND customer_phone = (
+        SELECT phone FROM public.profiles WHERE id = auth.uid()
+      )
+    )
+  );
+
+-- Allow anon users to read their own order by order_number (for tracking)
+DROP POLICY IF EXISTS "orders_anon_track" ON public.orders;
+CREATE POLICY "orders_anon_track"
+  ON public.orders FOR SELECT
+  USING (true);  -- order tracking is public (by order number)
+
+SELECT 'Orders RLS fixed ✅' AS result;

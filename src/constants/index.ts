@@ -16,43 +16,13 @@ export const SITE_CONFIG = {
   },
 } as const;
 
-export const NAV_ITEMS: NavItem[] = [
-  {
-    label: "Men", href: "/men",
-    children: [
-      { label: "T-Shirts", href: "/men/t-shirts" },
-      { label: "Shirts", href: "/men/shirts" },
-      { label: "Hoodies", href: "/men/hoodies" },
-      { label: "All Men", href: "/men" },
-    ],
-  },
-  {
-    label: "Women", href: "/women",
-    children: [
-      { label: "Dresses", href: "/women/dresses" },
-      { label: "Tops", href: "/women/tops" },
-      { label: "Hoodies", href: "/women/hoodies" },
-      { label: "All Women", href: "/women" },
-    ],
-  },
-  {
-    label: "Kids", href: "/kids",
-    children: [
-      { label: "Boys", href: "/kids/boys" },
-      { label: "Girls", href: "/kids/girls" },
-      { label: "All Kids", href: "/kids" },
-    ],
-  },
-  {
-    label: "Accessories", href: "/accessories",
-    children: [
-      { label: "Bags", href: "/accessories/bags" },
-      { label: "Shoes", href: "/accessories/shoes" },
-      { label: "All", href: "/accessories" },
-    ],
-  },
-  { label: "Sale", href: "/sale" },
-];
+export const NAV_ITEMS = [
+  { label: "Shop",  href: "/shop",  children: [] },
+  { label: "New",   href: "/new",   children: [] },
+  { label: "Sale",  href: "/sale",  children: [] },
+  { label: "About", href: "/about", children: [] },
+] as const;
+
 
 export const DELIVERY_AREAS = [
   "Dhaka City",

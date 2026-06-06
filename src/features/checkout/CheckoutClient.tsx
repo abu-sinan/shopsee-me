@@ -38,7 +38,7 @@ export function CheckoutClient() {
 
   const onSubmit = async (data: CheckoutFormValues) => {
     setIsSubmitting(true); setServerError(null);
-    const result = await createOrder({ formData: data, items, userId: user?.id ?? null });
+    const result = await createOrder({ formData: data, items, userId: null });
     if (!result.success || !result.orderNumber) {
       setServerError(result.error ?? "Something went wrong. Please try again.");
       setIsSubmitting(false); return;

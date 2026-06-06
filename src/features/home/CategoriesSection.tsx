@@ -61,7 +61,7 @@ export function CategoriesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4"
+          className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4"
         >
           {categories.map((cat) => (
             <motion.div

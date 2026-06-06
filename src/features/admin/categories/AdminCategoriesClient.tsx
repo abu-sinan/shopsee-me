@@ -1,5 +1,6 @@
 "use client";
 // @ts-nocheck
+import React from "react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -22,7 +23,7 @@ export function AdminCategoriesClient({ initialCategories }: { initialCategories
   const [deleteTarget, setDeleteTarget] = useState<Category | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
   const isEdit = !!editing;
-  const { register, handleSubmit, reset, setValue, formState: { errors, isSubmitting } } = useForm<CFV>({ resolver: zodResolver(categorySchema) });
+  const { register, handleSubmit, reset, setValue, watch, formState: { errors, isSubmitting } } = useForm<CFV>({ resolver: zodResolver(categorySchema) });
 
   const openCreate = () => { reset({ name: "", slug: "", description: "", image_url: "", parent_id: "" }); setEditing(null); setServerError(null); setModalOpen(true); };
   const openEdit = (cat: Category) => { reset({ name: cat.name, slug: cat.slug, description: cat.description ?? "", image_url: cat.image_url ?? "", parent_id: cat.parent_id ?? "" }); setEditing(cat); setServerError(null); setModalOpen(true); };
@@ -101,7 +102,7 @@ export function AdminCategoriesClient({ initialCategories }: { initialCategories
       <AnimatePresence>
         {modalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setModalOpen(false)}>
-            <motion.div initial={{ scale: 0.94, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.94, opacity: 0 }} transition={{ duration: 0.25 }} onClick={(e) => e.stopPropagation()} className="bg-white w-full max-w-md shadow-2xl max-h-[90dvh] overflow-y-auto">
+            <motion.div initial={{ scale: 0.94, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.94, opacity: 0 }} transition={{ duration: 0.25 }} onClick={(e) => e.stopPropagation()} className="bg-white w-full max-w-md shadow-2xl">
               <div className="flex items-center justify-between px-6 py-5 border-b border-brand-gray-100">
                 <h2 className="font-display font-semibold text-lg">{isEdit ? "Edit Category" : "New Category"}</h2>
                 <button onClick={() => setModalOpen(false)} className="p-1 text-brand-gray-400 hover:text-brand-black"><X size={18} strokeWidth={1.5} /></button>
@@ -133,8 +134,13 @@ export function AdminCategoriesClient({ initialCategories }: { initialCategories
                   <input {...register("image_url")} type="url" className={fi(!!errors.image_url?.message)} />
                   {errors.image_url?.message && <p className="mt-1 text-[11px] text-red-500">{errors.image_url.message}</p>}
                 </div>
-                <div><label className="block text-xs font-medium text-brand-gray-600 mb-1.5">Parent Category</label>
-                  <select {...register("parent_id")} className={cn(fi(false), "cursor-pointer")}><option value="">None (top level)</option>{parentCategories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select>
+                <div>
+                  <label className="block text-xs font-medium text-brand-gray-600 mb-1.5">Parent Category</label>
+                  <ParentCategorySelect
+                    value={watch("parent_id") ?? ""}
+                    onChange={(v) => setValue("parent_id", v)}
+                    categories={parentCategories}
+                  />
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={() => setModalOpen(false)} className="flex-1 btn-outline py-3 text-xs">Cancel</button>
@@ -160,5 +166,58 @@ export function AdminCategoriesClient({ initialCategories }: { initialCategories
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+
+/* ── Custom parent category dropdown (no native select) ── */
+function ParentCategorySelect({
+  value, onChange, categories,
+}: {
+  value:      string;
+  onChange:   (v: string) => void;
+  categories: { id: string; name: string }[];
+}) {
+  const [open, setOpen] = React.useState(false);
+  const ref             = React.useRef<HTMLDivElement>(null);
+  const selected        = categories.find((c) => c.id === value);
+
+  React.useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button type="button" onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between px-3 py-2.5 text-sm border border-brand-gray-200 bg-white text-left hover:border-brand-gray-400 transition-colors">
+        <span className={selected ? "text-brand-black" : "text-brand-stone"}>
+          {selected ? selected.name : "None (top level)"}
+        </span>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className={cn("transition-transform shrink-0", open && "rotate-180")}>
+          <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+      {open && (
+        <div className="absolute top-full left-0 right-0 z-50 bg-white border border-brand-gray-200 shadow-lg max-h-48 overflow-y-auto mt-1">
+          <button type="button" onClick={() => { onChange(""); setOpen(false); }}
+            className={cn("w-full text-left px-3 py-2.5 text-sm transition-colors",
+              !value ? "bg-brand-black text-white" : "hover:bg-brand-gray-50 text-brand-muted")}>
+            None (top level)
+          </button>
+          {categories.map((cat) => (
+            <button key={cat.id} type="button"
+              onClick={() => { onChange(cat.id); setOpen(false); }}
+              className={cn("w-full text-left px-3 py-2.5 text-sm transition-colors",
+                value === cat.id ? "bg-brand-black text-white" : "hover:bg-brand-gray-50 text-brand-dark")}>
+              {cat.name}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

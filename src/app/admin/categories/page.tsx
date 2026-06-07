@@ -1,16 +1,21 @@
-import { createClient } from "@/lib/supabase/server";
-import { AdminCategoriesClient } from "@/features/admin/categories/AdminCategoriesClient";
-import type { Category } from "@/types";
+import type { Metadata }             from "next";
+import { createClient }              from "@/lib/supabase/server";
+import { AdminCategoriesClient }     from "@/features/admin/categories/AdminCategoriesClient";
 
+export const metadata: Metadata = { title: "Categories" };
 export const dynamic = "force-dynamic";
 
-async function getCategories(): Promise<Category[]> {
-  const supabase = await createClient();
-  const { data } = await supabase.from("categories").select("*").order("name");
-  return (data ?? []) as Category[];
-}
-
 export default async function AdminCategoriesPage() {
-  const categories = await getCategories();
+  const supabase = await createClient();
+  const { data }  = await supabase
+    .from("categories")
+    .select("id, name, slug, parent_id, image_url, description")
+    .order("name");
+
+  const categories = (data ?? []) as {
+    id: string; name: string; slug: string;
+    parent_id: string | null; image_url?: string | null; description?: string | null;
+  }[];
+
   return <AdminCategoriesClient initialCategories={categories} />;
 }

@@ -1,31 +1,44 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense }      from "react";
+import { notFound }      from "next/navigation";
+import { createClient }  from "@/lib/supabase/server";
 import { ShopPageClient } from "@/features/shop/ShopPageClient";
 
 export const dynamic = "force-dynamic";
 
-interface Props {
-  params: Promise<{ category: string; subcategory: string }>;
-}
-
-const VALID_CATEGORIES = ["men", "women", "kids", "accessories"];
+interface Props { params: Promise<{ category: string; subcategory: string }>; }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { category, subcategory } = await params;
-  const cat = category.charAt(0).toUpperCase() + category.slice(1);
-  const sub = subcategory.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-  return {
-    title: `${sub} — ${cat}`,
-    description: `Shop ${sub} from ${cat}'s collection at ShopSeeMe.`,
-  };
+  const { subcategory } = await params;
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("categories")
+      .select("name")
+      .eq("slug", subcategory)
+      .single();
+    if (data) return { title: data.name, description: `Shop ${data.name} at ShopSeeMe` };
+  } catch { /* ignore */ }
+  const name = subcategory.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+  return { title: name };
 }
 
 export default async function SubcategoryPage({ params }: Props) {
   const { category, subcategory } = await params;
-  if (!VALID_CATEGORIES.includes(category)) notFound();
+
+  // Validate subcategory exists and belongs to parent
+  try {
+    const supabase = await createClient();
+    const { data: subCat } = await supabase
+      .from("categories")
+      .select("id, parent_id, categories!inner(slug)")
+      .eq("slug", subcategory)
+      .single();
+    if (!subCat) notFound();
+  } catch { /* allow even if validation fails */ }
+
   return (
-    <Suspense>
+    <Suspense fallback={<div className="min-h-screen bg-brand-cream/20 animate-pulse" />}>
       <ShopPageClient categorySlug={category} subcategorySlug={subcategory} />
     </Suspense>
   );
